@@ -14,9 +14,12 @@
 </template>
 <script>
 export default {
+  mounted() {
+    this.$store.dispatch('loadCustomers')
+  },
   methods: {
     openCustomer(customer) {
-      this.$store.dispatch('setLoadedCustomer', customer)
+      this.$store.dispatch('setOpenCustomer', customer)
     }
   },
   data() {

@@ -60,8 +60,17 @@ module.exports = {
    */
   modules: [
     // Doc: https://github.com/nuxt-community/axios-module#usage
-    '@nuxtjs/axios'
+    '@nuxtjs/axios',
+    '@nuxtjs/auth'
   ],
+
+  /**
+   * Router redirect to login
+   */
+  router: {
+    middleware: ['auth']
+  },
+
   /*
    ** Axios module configuration
    */
@@ -69,6 +78,30 @@ module.exports = {
     // See https://github.com/nuxt-community/axios-module#options
     baseURL: "https://localhost:44395/api/"
   },
+  /**
+   *  Auth module configuration
+   */
+  auth: {
+    strategies: {
+      local: {
+        endpoints: {
+          login: {
+            url: 'https://localhost:44395/api//account/login',
+            method: 'post',
+            propertyName: 'token'
+          },
+          logout: false,
+          user: {
+            url: 'https://localhost:44395/api//account/user',
+            method: 'get',
+            propertyName: ''
+          }
+
+        }
+      }
+    }
+  },
+
 
   /*
    ** Build configuration

@@ -3,18 +3,38 @@ import axios from "axios";
 
 export default {
   state: () => ({
-    customer: {}
+    customer: {},
+    customers: []
   }),
   mutations: {
     setLoadedCustomer(state, payload) {
       state.customer = payload
+    },
+    setCustomers(state, payload) {
+      state.customers = payload
     }
   },
   actions: {
-    setLoadedCustomer({
-      commit
-    }, payload) {
-      commit("setLoadedCustomer", payload)
+    setOpenCustomer({
+      commit,
+      payload
+    }) {
+      console.log("here")
+      this.$axios.get("customer").then(res => {
+        console.log("res: " + JSON.stringify(res))
+        commit("setLoadedCustomer", res)
+      })
+
+    },
+    loadCustomers({
+      commit,
+
+    }) {
+      console.log("here")
+      this.$axios.get("customer").then(res => {
+        commit("setCustomers", res.data)
+      })
+
     }
   },
   getters: {

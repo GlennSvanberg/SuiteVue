@@ -39,6 +39,7 @@
 </template>
 <script>
 export default {
+  auth: false,
   data: () => ({
     email: 'signeratsvanberg@gmail.com',
     password: 'liseberg4'
@@ -50,11 +51,17 @@ export default {
     }
   },
   methods: {
-    login() {
-      this.$store.dispatch('login', {
-        email: this.email,
-        password: this.password
-      })
+    async login() {
+      try {
+        await this.$auth.loginWith('local', {
+          data: {
+            userName: this.email,
+            password: this.password
+          }
+        })
+
+        this.$router.push('/')
+      } catch (e) {}
     }
   },
   layout: 'empty'
