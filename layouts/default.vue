@@ -40,11 +40,7 @@
 
 <script>
 export default {
-  fetch({ store, redirect }) {
-    if (store.state.token == '') {
-      return redirect('/login')
-    }
-  },
+  fetch({ store, redirect }) {},
   data() {
     return {
       clipped: false,

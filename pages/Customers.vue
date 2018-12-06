@@ -3,7 +3,7 @@
     <v-layout row wrap>
       <v-flex sm12 md6>
         <v-layout row class="mx-3">
-          <create-customer class="mr-5"></create-customer>
+          <create-customer class="m-5"></create-customer>
           <v-text-field append-icon="search"></v-text-field>
         </v-layout>
 

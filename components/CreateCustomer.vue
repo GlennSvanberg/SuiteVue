@@ -10,7 +10,7 @@
       </v-toolbar>
       <v-container>
         <v-card-text>
-          <v-form>
+          <v-form v-model="valid" ref="form" lazy-validation>
             <v-text-field
               append-icon="face"
               label="Förnamn"
@@ -84,7 +84,8 @@
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn class="red--text darken-1" flat @click="createCustomerDialog = false">Avbryt</v-btn>
-          <v-btn class="green--text darken-1" flat @click="createCustomer">Spara</v-btn>
+
+          <v-btn class="green--text darken-1" flat @click="createCustomer" :disabled="!valid">Spara</v-btn>
         </v-card-actions>
       </v-flex>
     </v-card>
@@ -97,6 +98,7 @@ import { required, maxLength, email } from 'vuelidate/lib/validators'
 export default {
   data() {
     return {
+      valid: false,
       createCustomerDialog: false,
       firstName: '',
       lastName: '',
@@ -124,18 +126,27 @@ export default {
   },
   computed: {},
   methods: {
+    clear() {
+      this.$refs.form.reset()
+    },
     createCustomer() {
-      console.log('creating')
-      this.$store.dispatch('createCustomer', {
-        firstName: this.firstName,
-        lastName: this.lastName,
-        personalNumber: this.personalNumber,
-        phone: this.phone,
-        email: this.email,
-        adress: this.adress,
-        zipCode: this.zipCode,
-        city: this.city
-      })
+      if (this.$refs.form.validate()) {
+        console.log('creating')
+
+        this.$store.dispatch('createCustomer', {
+          firstName: this.firstName,
+          lastName: this.lastName,
+          personalNumber: this.personalNumber,
+          phone: this.phone,
+          email: this.email,
+          adress: this.adress,
+          zipCode: this.zipCode,
+          city: this.city
+        })
+
+        this.$refs.form.reset()
+        this.createCustomerDialog = false
+      }
     }
   }
 }

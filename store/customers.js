@@ -12,9 +12,17 @@ export default {
     },
     setCustomers(state, payload) {
       state.customers = payload
+    },
+    addCustomer(state, payload) {
+      state.customers.push(payload)
     }
   },
   actions: {
+    getCustomer({
+      commit
+    }, payload) {
+      console.log("customer" + payload);
+    },
     loadOpenCustomer({
       commit
     }, payload) {
@@ -38,7 +46,8 @@ export default {
     }, payload) {
       this.$axios.post("customer", payload).then(res => {
         commit("setLoadedCustomer", res.data)
-        
+        commit("addCustomer", res.data)
+
       }).catch(error => {
         console.log("error" + error)
       })
