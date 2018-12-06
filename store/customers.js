@@ -32,6 +32,16 @@ export default {
         data
       } = await this.$axios.get("customer")
       commit("setCustomers", data)
+    },
+    createCustomer({
+      commit
+    }, payload) {
+      this.$axios.post("customer", payload).then(res => {
+        commit("setLoadedCustomer", res.data)
+        
+      }).catch(error => {
+        console.log("error" + error)
+      })
     }
   },
   getters: {
