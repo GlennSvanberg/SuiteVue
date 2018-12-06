@@ -61,8 +61,18 @@ module.exports = {
   modules: [
     // Doc: https://github.com/nuxt-community/axios-module#usage
     '@nuxtjs/axios',
-    '@nuxtjs/auth'
+    '@nuxtjs/auth',
+    '@nuxtjs/toast'
   ],
+  /**
+   * Toast to display toasts
+   */
+
+  toast: {
+    position: 'bottom-center',
+    duration: 3000,
+    fullWidth: true,
+  },
 
   /**
    * Router redirect to login
@@ -86,13 +96,13 @@ module.exports = {
       local: {
         endpoints: {
           login: {
-            url: 'https://localhost:44395/api//account/login',
+            url: 'https://localhost:44395/api/account/login',
             method: 'post',
             propertyName: 'token'
           },
           logout: false,
           user: {
-            url: 'https://localhost:44395/api//account/user',
+            url: 'https://localhost:44395/api/account/user',
             method: 'get',
             propertyName: ''
           }

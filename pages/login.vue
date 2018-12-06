@@ -29,7 +29,7 @@
             </v-card-text>
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn :disabled="!formIsValid" @click="login" color="primary">Login</v-btn>
+              <v-btn :disabled="!formIsValid" @click="login" color="primary">Logga in</v-btn>
             </v-card-actions>
           </v-card>
         </v-flex>
@@ -53,15 +53,21 @@ export default {
   methods: {
     async login() {
       try {
-        await this.$auth.loginWith('local', {
-          data: {
-            userName: this.email,
-            password: this.password
-          }
-        })
-
-        this.$router.push('/')
-      } catch (e) {}
+        await this.$auth
+          .loginWith('local', {
+            data: {
+              userName: this.email,
+              password: this.password
+            }
+          })
+          .then(() => {
+            this.$toast.success('Inloggad')
+            this.$router.push('/')
+          })
+      } catch (e) {
+        this.$router.push('/login')
+        this.$toast.error('Något gick fel vid inloggningen, försök igen')
+      }
     }
   },
   layout: 'empty'

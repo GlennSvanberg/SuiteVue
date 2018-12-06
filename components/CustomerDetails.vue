@@ -1,6 +1,6 @@
 <template>
   <v-layout>
-    <v-flex v-if="customer != undefined">{{customer.name}}</v-flex>
+    <v-flex v-if="customer != undefined">{{customer.firstName}}</v-flex>
   </v-layout>
 </template>
 <script>

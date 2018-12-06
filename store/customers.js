@@ -15,31 +15,31 @@ export default {
     }
   },
   actions: {
-    setOpenCustomer({
-      commit,
-      payload
-    }) {
-      console.log("here")
-      this.$axios.get("customer").then(res => {
-        console.log("res: " + JSON.stringify(res))
-        commit("setLoadedCustomer", res)
+    loadOpenCustomer({
+      commit
+    }, payload) {
+      console.log("here" + payload)
+      this.$axios.get("customer/" + payload).then(res => {
+        commit("setLoadedCustomer", res.data)
       })
 
     },
-    loadCustomers({
-      commit,
+    async loadCustomers({
+      commit
 
     }) {
-      console.log("here")
-      this.$axios.get("customer").then(res => {
-        commit("setCustomers", res.data)
-      })
-
+      const {
+        data
+      } = await this.$axios.get("customer")
+      commit("setCustomers", data)
     }
   },
   getters: {
     loadedCustomer(state) {
       return state.customer
+    },
+    customers(state) {
+      return state.customers
     }
   }
 };
