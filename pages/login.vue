@@ -61,6 +61,7 @@ export default {
             }
           })
           .then(() => {
+            this.$store.dispatch('loadStores')
             this.$toast.success('Inloggad')
             this.$router.push('/')
           })

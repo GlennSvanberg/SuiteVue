@@ -3,6 +3,7 @@ import Vuex from "vuex";
 
 import customers from "./customers";
 import users from "./users";
+import stores from "./stores";
 
 
 
@@ -14,7 +15,8 @@ const store = () => {
     modules: {
 
       customers: customers,
-      users: users
+      users: users,
+      stores: stores
     }
   });
 };
