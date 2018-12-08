@@ -96,13 +96,13 @@ module.exports = {
       local: {
         endpoints: {
           login: {
-            url: 'https://localhost:44395/api/account/login',
+            url: 'https://localhost:44395/api/user/login',
             method: 'post',
             propertyName: 'token'
           },
           logout: false,
           user: {
-            url: 'https://localhost:44395/api/account/user',
+            url: 'https://localhost:44395/api/user',
             method: 'get',
             propertyName: ''
           }
