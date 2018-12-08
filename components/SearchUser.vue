@@ -35,7 +35,14 @@
 
 <script>
 export default {
-  components: {},
+  created() {
+    var loggedInUser = this.$store.state.auth.user
+    this.user = {
+      id: loggedInUser.id,
+      name: loggedInUser.firstName + ' ' + loggedInUser.lastName,
+      userName: loggedInUser.userName
+    }
+  },
   computed: {
     users() {
       return this.$store.getters.users
@@ -43,11 +50,9 @@ export default {
   },
   watch: {
     user(val) {
-      console.log('name' + val.name)
       this.$emit('sellerChange', val.id)
     }
   },
-  methods: {},
   data() {
     return {
       user: null,
