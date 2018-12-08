@@ -46,7 +46,12 @@ export default {
     }, payload) {
       this.$axios.post("customer", payload).then(res => {
         commit("setLoadedCustomer", res.data)
-        commit("addCustomer", res.data)
+        var customer = {
+          id: res.data.id,
+          name: res.data.firstName + " " + res.data.lastName,
+          personalNumber: res.data.personalNumber
+        }
+        commit("addCustomer", customer)
 
       }).catch(error => {
         console.log("error" + error)

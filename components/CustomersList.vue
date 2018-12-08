@@ -1,8 +1,8 @@
 <template>
-  <v-data-table :headers="headers" :items="customers" item-key="name" hide-actions >
+  <v-data-table :headers="headers" :items="customers" item-key="name" hide-actions>
     <template slot="items" slot-scope="props">
       <tr @click="openCustomer(props.item.id)">
-        <td>{{ props.item.firstName}} {{props.item.lastName}}</td>
+        <td>{{ props.item.name}}</td>
         <td>{{ props.item.personalNumber}}</td>
       </tr>
     </template>

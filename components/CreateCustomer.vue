@@ -12,6 +12,14 @@
         <v-card-text>
           <v-form v-model="valid" ref="form" lazy-validation>
             <v-text-field
+              append-icon="dialpad"
+              label="Personnummer"
+              type="number"
+              v-model="personalNumber"
+              required
+              :rules="personalNumberRules"
+            ></v-text-field>
+            <v-text-field
               append-icon="face"
               label="Förnamn"
               type="text"
@@ -26,14 +34,6 @@
               v-model="lastName"
               required
               :rules="nameRules"
-            ></v-text-field>
-            <v-text-field
-              append-icon="dialpad"
-              label="Personnummer"
-              type="number"
-              v-model="personalNumber"
-              required
-              :rules="personalNumberRules"
             ></v-text-field>
             <v-text-field
               append-icon="phone"
@@ -102,8 +102,8 @@ export default {
       createCustomerDialog: false,
       firstName: '',
       lastName: '',
-      personalNumber: null,
       phone: '',
+      personalNumber: '',
       email: '',
       adress: '',
       zipCode: '',
@@ -124,7 +124,6 @@ export default {
       adressRules: [v => !!v || 'Adress måste fyllas i']
     }
   },
-  computed: {},
   methods: {
     clear() {
       this.$refs.form.reset()
@@ -133,6 +132,10 @@ export default {
       if (this.$refs.form.validate()) {
         console.log('creating')
 
+        this.$emit('newCustomer', {
+          name: this.firstName + ' ' + this.lastName,
+          personalNumber: this.personalNumber
+        })
         this.$store.dispatch('createCustomer', {
           firstName: this.firstName,
           lastName: this.lastName,

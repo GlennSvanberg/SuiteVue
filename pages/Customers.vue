@@ -19,6 +19,7 @@
 import CustomersList from '~/components/customerslist'
 import CustomerDetails from '~/components/customerdetails'
 import CreateCustomer from '~/components/createcustomer'
+
 export default {
   async fetch({ store }) {
     await store.dispatch('loadCustomers')

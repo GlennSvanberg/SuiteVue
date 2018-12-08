@@ -11,7 +11,7 @@
       <v-container>
         <v-card-text>
           <v-form v-model="valid" ref="form" lazy-validation>
-            <search-customer></search-customer>
+            <search-customer @customerChange="customerChange"></search-customer>
           </v-form>
         </v-card-text>
       </v-container>
@@ -39,7 +39,7 @@ export default {
       valid: false,
       createReceiptDialog: false,
       seller: '',
-      customer: null,
+      customerId: null,
       store: null,
       products: [],
       subsrption: '',
@@ -48,6 +48,10 @@ export default {
   },
   computed: {},
   methods: {
+    customerChange(val) {
+      this.customer = val
+    },
+
     clear() {
       this.$refs.form.reset()
     },
