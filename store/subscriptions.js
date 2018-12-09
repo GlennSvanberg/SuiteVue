@@ -9,10 +9,23 @@ export default {
   mutations: {
     setSuppliers(state, payload) {
       state.suppliers = payload
+    },
+    addSubscription(state, payload) {
+      
+      console.log("payload" + JSON.stringify(payload))
     }
 
   },
   actions: {
+    async addSubscription({
+      commit
+    }, payload) {
+      const {
+        data
+      } = await this.$axios.post("subscription", payload)
+      commit("addSubscription", data)
+
+    },
     async loadSuppliers({
       commit
     }) {

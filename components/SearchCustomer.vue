@@ -18,7 +18,12 @@
         >
           <v-slide-x-reverse-transition slot="append-outer" mode="out-in"></v-slide-x-reverse-transition>
           <template slot="selection" slot-scope="{ item, selected }">
-            <v-chip :selected="selected" color="primary" class="white--text">
+            <v-chip
+              v-if="item.personalNumber != null"
+              :selected="selected"
+              color="primary"
+              class="white--text"
+            >
               <span v-text="item.personalNumber + ' - ' + item.name"></span>
             </v-chip>
           </template>
