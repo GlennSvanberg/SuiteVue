@@ -1,10 +1,9 @@
 <template>
   <v-card>
     <v-layout row>
-      <v-flex xs6>
+      <v-flex xs8>
         <v-autocomplete
           class="ml-3"
-          type="number"
           v-model="customer"
           :items="customers"
           label="Kund: yyyymmddxxxx"
@@ -13,9 +12,17 @@
           item-value="customer"
           return-object
           flat
+          clearable
+          chips
           :search-input.sync="search"
         >
           <v-slide-x-reverse-transition slot="append-outer" mode="out-in"></v-slide-x-reverse-transition>
+          <template slot="selection" slot-scope="{ item, selected }">
+            <v-chip :selected="selected" color="primary" class="white--text">
+              <span v-text="item.personalNumber + ' - ' + item.name"></span>
+            </v-chip>
+          </template>
+
           <template slot="item" slot-scope="data">
             <v-list-tile>
               <v-list-tile-content v-if="typeof data.item !== 'object'" v-text="data.item"></v-list-tile-content>
@@ -27,8 +34,7 @@
           </template>
         </v-autocomplete>
       </v-flex>
-      <v-flex xs6>
-        <v-text-field v-if="customer" readonly v-model="customer.name"></v-text-field>
+      <v-flex xs4>
         <no-ssr>
           <create-customer v-if="!customer" @newCustomer="newCustomer"></create-customer>
         </no-ssr>
@@ -58,7 +64,7 @@ export default {
       }
     },
     customer(val) {
-      if (val.id) {
+      if (val) {
         this.$emit('customerChange', val.id)
       }
     }

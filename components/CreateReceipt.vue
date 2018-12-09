@@ -12,6 +12,7 @@
         <v-card-text>
           <v-form v-model="valid" ref="form" lazy-validation>
             <search-user @sellerChange="sellerChange"></search-user>
+            <search-store @storeChange="storeChange"></search-store>
             <search-customer @customerChange="customerChange"></search-customer>
           </v-form>
         </v-card-text>
@@ -32,14 +33,17 @@ import { validationMixin } from 'vuelidate'
 import { required, maxLength, email } from 'vuelidate/lib/validators'
 import SearchUser from '~/components/searchUser'
 import SearchCustomer from '~/components/searchcustomer'
+import SearchStore from '~/components/searchstore'
 
 export default {
   created() {
     this.$store.dispatch('loadUsers')
+    this.$store.dispatch('loadStores')
   },
   components: {
     SearchCustomer: SearchCustomer,
-    SearchUser: SearchUser
+    SearchUser: SearchUser,
+    SearchStore: SearchStore
   },
   data() {
     return {
@@ -47,9 +51,9 @@ export default {
       createReceiptDialog: false,
       sellerId: '',
       customerId: null,
-      store: null,
+      storeId: null,
       products: [],
-      subsrption: '',
+      subscrption: '',
       subscriptionAddon: ''
     }
   },
@@ -60,6 +64,10 @@ export default {
     },
     sellerChange(val) {
       this.sellerId = val
+    },
+    storeChange(val) {
+      console.log('val' + val)
+      this.storeId = val
     },
     clear() {
       this.$refs.form.reset()

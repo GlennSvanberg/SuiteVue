@@ -4,30 +4,30 @@
       <v-flex xs8>
         <v-autocomplete
           class="ml-3"
-          v-model="user"
-          :items="users"
-          label="Säljare"
-          prepend-icon="stars"
-          item-text="userName"
-          item-value="user"
+          v-model="store"
+          :items="stores"
+          label="Butik"
+          prepend-icon="store"
+          item-text="name"
+          item-value="store"
           return-object
-          :search-input.sync="search"
-          chips
           flat
           clearable
+          chips
+          :search-input.sync="search"
         >
           <v-slide-x-reverse-transition slot="append-outer" mode="out-in"></v-slide-x-reverse-transition>
+
           <template slot="selection" slot-scope="{ item, selected }">
             <v-chip :selected="selected" color="primary" class="white--text">
-              <span v-text="item.userName + ' - ' + item.name"></span>
+              <span v-text="item.name"></span>
             </v-chip>
           </template>
 
           <template slot="item" slot-scope="data">
             <v-list-tile>
               <v-list-tile-content>
-                <v-list-tile-title v-text="data.item.userName"></v-list-tile-title>
-                <v-list-tile-sub-title v-text="data.item.name"></v-list-tile-sub-title>
+                <v-list-tile-title v-html="data.item.name"></v-list-tile-title>
               </v-list-tile-content>
             </v-list-tile>
           </template>
@@ -40,28 +40,23 @@
 <script>
 export default {
   created() {
-    var loggedInUser = this.$store.state.auth.user
-    this.user = {
-      id: loggedInUser.id,
-      name: loggedInUser.firstName + ' ' + loggedInUser.lastName,
-      userName: loggedInUser.userName
-    }
+    this.store = this.$store.state.auth.user.store
   },
   computed: {
-    users() {
-      return this.$store.getters.users
+    stores() {
+      return this.$store.getters.stores
     }
   },
   watch: {
-    user(val) {
+    store(val) {
       if (val) {
-        this.$emit('sellerChange', val.id)
+        this.$emit('storeChange', val.id)
       }
     }
   },
   data() {
     return {
-      user: null,
+      store: null,
       search: null
     }
   }

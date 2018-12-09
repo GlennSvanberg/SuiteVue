@@ -41,8 +41,8 @@
 export default {
   auth: false,
   data: () => ({
-    email: 'signeratsvanberg@gmail.com',
-    password: 'liseberg4'
+    email: 'MGN199',
+    password: 'test1234'
   }),
 
   computed: {
@@ -61,7 +61,6 @@ export default {
             }
           })
           .then(() => {
-            this.$store.dispatch('loadStores')
             this.$toast.success('Inloggad')
             this.$router.push('/')
           })
