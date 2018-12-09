@@ -4,6 +4,7 @@ import Vuex from "vuex";
 import customers from "./customers";
 import users from "./users";
 import stores from "./stores";
+import subscriptions from "./subscriptions";
 
 
 
@@ -16,7 +17,8 @@ const store = () => {
 
       customers: customers,
       users: users,
-      stores: stores
+      stores: stores,
+      subscriptions: subscriptions
     }
   });
 };
