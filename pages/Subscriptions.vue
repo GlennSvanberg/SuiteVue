@@ -165,6 +165,7 @@ export default {
     },
     deleteItem(val) {
       console.log('item to delete' + JSON.stringify(val))
+      this.$store.dispatch('deleteSubscription', val.id)
     },
     changeTab(supplier) {
       console.log('test' + JSON.stringify(supplier))
