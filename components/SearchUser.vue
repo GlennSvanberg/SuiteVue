@@ -1,5 +1,5 @@
 <template>
-  <v-card>
+  <v-card flat>
     <v-layout row>
       <v-flex xs8>
         <v-autocomplete
@@ -12,15 +12,12 @@
           item-value="user"
           return-object
           :search-input.sync="search"
-          chips
           flat
           clearable
         >
           <v-slide-x-reverse-transition slot="append-outer" mode="out-in"></v-slide-x-reverse-transition>
           <template slot="selection" slot-scope="{ item, selected }">
-            <v-chip :selected="selected" color="primary" class="white--text">
-              <span v-text="item.userName + ' - ' + item.name"></span>
-            </v-chip>
+            <span :selected="selected" v-text="item.userName + ' - ' + item.name"></span>
           </template>
 
           <template slot="item" slot-scope="data">

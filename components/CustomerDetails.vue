@@ -85,7 +85,7 @@
 
             <v-tab-item v-for="i in 3" :id="'tab-' + i" :key="i">
               <v-card flat>
-                <v-card-text>{{ text }}</v-card-text>
+                <v-card-text>text</v-card-text>
               </v-card>
             </v-tab-item>
           </v-tabs>

@@ -10,10 +10,15 @@
       </v-toolbar>
       <v-container>
         <v-card-text>
-          <v-form v-model="valid" ref="form" lazy-validation>
-            <search-user @sellerChange="sellerChange"></search-user>
-            <search-store @storeChange="storeChange"></search-store>
-            <search-customer @customerChange="customerChange"></search-customer>
+          <v-form v-model="valid" ref="form" lazy-validation class="my-3">
+            <search-user @sellerChange="sellerChange" class="my-3"></search-user>
+            <search-store @storeChange="storeChange" class="my-3"></search-store>
+            <search-customer @customerChange="customerChange" class="my-3"></search-customer>
+            <search-subscriuption
+              @supplierChange="supplierChange"
+              @subscriptionChange="subscriptionChange"
+              class="my-5"
+            ></search-subscriuption>
           </v-form>
         </v-card-text>
       </v-container>
@@ -21,7 +26,6 @@
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn class="red--text darken-1" flat @click="createReceiptDialog = false">Avbryt</v-btn>
-
           <v-btn class="green--text darken-1" flat @click="createReceipt" :disabled="!valid">Spara</v-btn>
         </v-card-actions>
       </v-flex>
@@ -34,6 +38,7 @@ import { required, maxLength, email } from 'vuelidate/lib/validators'
 import SearchUser from '~/components/searchUser'
 import SearchCustomer from '~/components/searchcustomer'
 import SearchStore from '~/components/searchstore'
+import SearchSubscription from '~/components/searchsubscription'
 
 export default {
   created() {
@@ -43,7 +48,8 @@ export default {
   components: {
     SearchCustomer: SearchCustomer,
     SearchUser: SearchUser,
-    SearchStore: SearchStore
+    SearchStore: SearchStore,
+    SearchSubscriuption: SearchSubscription
   },
   data() {
     return {
@@ -53,7 +59,8 @@ export default {
       customerId: null,
       storeId: null,
       products: [],
-      subscrption: '',
+      supplierId: '',
+      subscrptionId: '',
       subscriptionAddon: ''
     }
   },
@@ -66,8 +73,16 @@ export default {
       this.sellerId = val
     },
     storeChange(val) {
-      console.log('val' + val)
+      console.log('store' + val)
       this.storeId = val
+    },
+    supplierChange(val) {
+      console.log('supplier' + val)
+      this.supplierId = val
+    },
+    subscriptionChange(val) {
+      console.log('subscription' + val)
+      this.subscriptionId = val
     },
     clear() {
       this.$refs.form.reset()

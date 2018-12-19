@@ -1,5 +1,5 @@
 <template>
-  <v-card>
+  <v-card flat>
     <v-layout row>
       <v-flex xs8>
         <v-autocomplete
@@ -8,7 +8,6 @@
           :items="customers"
           label="Kund: yyyymmddxxxx"
           prepend-icon="face"
-          item-text="personalNumber"
           item-value="customer"
           return-object
           flat
@@ -16,16 +15,12 @@
           chips
           :search-input.sync="search"
         >
-          <v-slide-x-reverse-transition slot="append-outer" mode="out-in"></v-slide-x-reverse-transition>
           <template slot="selection" slot-scope="{ item, selected }">
-            <v-chip
+            <span
               v-if="item.personalNumber != null"
               :selected="selected"
-              color="primary"
-              class="white--text"
-            >
-              <span v-text="item.personalNumber + ' - ' + item.name"></span>
-            </v-chip>
+              v-text="item.name + ' - ' + item.personalNumber"
+            ></span>
           </template>
 
           <template slot="item" slot-scope="data">

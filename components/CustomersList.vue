@@ -1,7 +1,7 @@
 <template>
   <v-data-table :headers="headers" :items="customers" item-key="name" hide-actions>
     <template slot="items" slot-scope="props">
-      <tr @click="openCustomer(props.item.id)">
+      <tr :class="active" @click="openCustomer(props.item.id)" style="cursor:pointer;">
         <td>{{ props.item.name}}</td>
         <td>{{ props.item.personalNumber}}</td>
       </tr>

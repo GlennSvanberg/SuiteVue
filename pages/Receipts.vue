@@ -20,6 +20,7 @@ import CreateReceipt from '~/components/createreceipt'
 export default {
   async fetch({ store }) {
     await store.dispatch('loadCustomers')
+    await store.dispatch('loadSuppliers')
   },
   components: {
     CreateReceipt: CreateReceipt

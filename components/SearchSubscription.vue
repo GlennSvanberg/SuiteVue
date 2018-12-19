@@ -1,0 +1,57 @@
+<template>
+  <v-card flat>
+    <v-layout row>
+      <v-flex xs8>
+        <v-select
+          class="ml-5"
+          v-model="supplier"
+          :items="suppliers"
+          item-text="name"
+          label="Operatör"
+          return-object
+        ></v-select>
+        <v-select
+          v-if="supplier.subscriptions"
+          class="ml-5"
+          v-model="subscription"
+          :items="supplier.subscriptions"
+          item-text="title"
+          label="Abonnemang"
+          return-object
+          clearable
+        ></v-select>
+      </v-flex>
+    </v-layout>
+  </v-card>
+</template>
+
+<script>
+export default {
+  computed: {
+    suppliers() {
+      return this.$store.getters.suppliers
+    }
+  },
+  watch: {
+    suppliers(val) {
+      if (val) {
+        this.$emit('supplierChange', val.id)
+      }
+    },
+    subscription(val) {
+      if (val) {
+        this.$emit('subscriptionChange', val.id)
+      }
+    }
+  },
+  data() {
+    return {
+      supplier: { subscriptions: [] },
+      subscription: null,
+      search: null
+    }
+  }
+}
+</script>
+<style scoped>
+</style>

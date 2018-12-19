@@ -1,42 +1,17 @@
 <template>
-  <v-card>
+  <v-card flat>
     <v-layout row>
       <v-flex xs8>
-        <v-autocomplete
+        <v-select
           class="ml-3"
           v-model="store"
           :items="stores"
-          label="Butik"
-          prepend-icon="store"
           item-text="name"
-          item-value="store"
+          label="Butik"
           return-object
-          flat
+          prepend-icon="store"
           clearable
-          chips
-          :search-input.sync="search"
-        >
-          <v-slide-x-reverse-transition slot="append-outer" mode="out-in"></v-slide-x-reverse-transition>
-
-          <template slot="selection" slot-scope="{ item, selected }">
-            <v-chip
-              v-if="item.name != null"
-              :selected="selected"
-              color="primary"
-              class="white--text"
-            >
-              <span v-text="item.name"></span>
-            </v-chip>
-          </template>
-
-          <template slot="item" slot-scope="data">
-            <v-list-tile>
-              <v-list-tile-content>
-                <v-list-tile-title v-html="data.item.name"></v-list-tile-title>
-              </v-list-tile-content>
-            </v-list-tile>
-          </template>
-        </v-autocomplete>
+        ></v-select>
       </v-flex>
     </v-layout>
   </v-card>
