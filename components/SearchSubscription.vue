@@ -1,7 +1,7 @@
 <template>
   <v-card flat>
     <v-layout row>
-      <v-flex xs8>
+      <v-flex xs12>
         <v-select
           class="ml-5"
           v-model="supplier"
@@ -33,14 +33,25 @@ export default {
     }
   },
   watch: {
-    suppliers(val) {
+    supplier(val) {
       if (val) {
         this.$emit('supplierChange', val.id)
+        this.subscription = null
       }
     },
     subscription(val) {
       if (val) {
-        this.$emit('subscriptionChange', val.id)
+        this.$emit('subscriptionChange', {
+          id: val.id,
+          revenue: val.revenue,
+          pricePerMonth: val.pricePerMonth
+        })
+      } else {
+        this.$emit('subscriptionChange', {
+          id: null,
+          revenue: 0,
+          pricePerMonth: 0
+        })
       }
     }
   },

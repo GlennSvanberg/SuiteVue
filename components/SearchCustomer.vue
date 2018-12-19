@@ -36,7 +36,7 @@
       </v-flex>
       <v-flex xs4>
         <no-ssr>
-          <create-customer v-if="!customer" @newCustomer="newCustomer"></create-customer>
+          <create-customer class="ml-3" v-if="!customer" @newCustomer="newCustomer"></create-customer>
         </no-ssr>
       </v-flex>
     </v-layout>
