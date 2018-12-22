@@ -5,6 +5,7 @@ import customers from "./customers";
 import users from "./users";
 import stores from "./stores";
 import subscriptions from "./subscriptions";
+import products from "./products";
 
 
 
@@ -18,7 +19,8 @@ const store = () => {
       customers: customers,
       users: users,
       stores: stores,
-      subscriptions: subscriptions
+      subscriptions: subscriptions,
+      products: products
     }
   });
 };

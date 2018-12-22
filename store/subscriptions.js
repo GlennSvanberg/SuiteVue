@@ -14,11 +14,9 @@ export default {
       for (var i = 0; i < supplier.subscriptions.length; i++) {
         if (supplier.subscriptions[i].id == payload.id) {
           supplier.subscriptions.splice(i, 1)
-          break
+          break // only works because of loadUppliers in then method
         }
       }
-
-
     },
     setSuppliers(state, payload) {
       state.suppliers = payload

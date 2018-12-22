@@ -132,6 +132,7 @@ export default {
     },
     saveSubscription() {
       if (this.editing) {
+        // do something maybe save the changes???
       } else {
         this.$store
           .dispatch('addSubscription', {
@@ -143,6 +144,7 @@ export default {
           })
           .then(() => {
             this.$store.dispatch('loadSuppliers')
+            // lägger inte alltid till ett nytt abonnemang, mpste refresha
           })
         this.dialog = false
 

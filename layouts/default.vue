@@ -25,6 +25,21 @@
       <v-btn to="/cases" flat>
         <v-icon left>work</v-icon>Ärenden
       </v-btn>
+      <v-menu open-on-hover offset-y>
+        <v-toolbar-title slot="activator">
+          <v-btn flat>Admin
+            <v-icon dark>arrow_drop_down</v-icon>
+          </v-btn>
+        </v-toolbar-title>
+        <v-list>
+          <v-list-tile @click="subscription">
+            <v-list-tile-title>Abonnemang</v-list-tile-title>
+          </v-list-tile>
+          <v-list-tile @click="products">
+            <v-list-tile-title>Produkter</v-list-tile-title>
+          </v-list-tile>
+        </v-list>
+      </v-menu>
       <v-btn @click="logout" flat>
         <v-icon left>lock</v-icon>Logga ut
       </v-btn>
@@ -33,7 +48,7 @@
       <nuxt/>
     </v-content>
     <v-footer :fixed="fixed" app>
-      <span>Glenn Svanberg &copy; 2018</span>
+      <span class="ml-5">Glenn Svanberg &copy; 2019</span>
     </v-footer>
   </v-app>
 </template>
@@ -53,6 +68,12 @@ export default {
     }
   },
   methods: {
+    subscription() {
+      this.$router.push('/subscriptions')
+    },
+    products() {
+      this.$router.push('/products')
+    },
     async logout() {
       await this.$auth.logout()
       this.$router.push('/login')

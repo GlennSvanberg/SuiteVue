@@ -9,10 +9,10 @@
           label="Kund: yyyymmddxxxx"
           prepend-icon="face"
           item-value="customer"
+          item-text="personalNumber"
           return-object
           flat
           clearable
-          chips
           :search-input.sync="search"
         >
           <template slot="selection" slot-scope="{ item, selected }">
@@ -22,7 +22,6 @@
               v-text="item.name + ' - ' + item.personalNumber"
             ></span>
           </template>
-
           <template slot="item" slot-scope="data">
             <v-list-tile>
               <v-list-tile-content v-if="typeof data.item !== 'object'" v-text="data.item"></v-list-tile-content>
