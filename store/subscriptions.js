@@ -1,10 +1,9 @@
-import Vuex from "vuex";
-import axios from "axios";
+import Vuex from 'vuex'
+import axios from 'axios'
 
 export default {
   state: () => ({
     suppliers: []
-
   }),
   mutations: {
     deleteSubscription(state, payload) {
@@ -36,7 +35,7 @@ export default {
       var supplier = state.suppliers.find(data => {
         return data.id == payload.supplier.id
       })
-      var subscription = supplier.subscriptions.find(x => x.id == payload.id);
+      var subscription = supplier.subscriptions.find(x => x.id == payload.id)
       if (subscription) {
         Object.assign(subscription, editedSubscription)
       }
@@ -60,40 +59,23 @@ export default {
     }
   },
   actions: {
-    async editSubscription({
-      commit
-    }, payload) {
-      const {
-        data
-      } = await this.$axios.post("subscription/edit" + payload)
-      console.log("returned from backend " + JSON.stringify(data))
-      commit("editSubscription", data)
+    async editSubscription({ commit }, payload) {
+      const { data } = await this.$axios.post('subscription/edit' + payload)
+      console.log('returned from backend ' + JSON.stringify(data))
+      commit('editSubscription', data)
     },
-    async deleteSubscription({
-      commit
-    }, payload) {
-      const {
-        data
-      } = await this.$axios.delete("subscription/" + payload)
-      console.log("action: " + data)
-      commit("deleteSubscription", data)
+    async deleteSubscription({ commit }, payload) {
+      const { data } = await this.$axios.delete('subscription/' + payload)
+      console.log('action: ' + data)
+      commit('deleteSubscription', data)
     },
-    async addSubscription({
-      commit
-    }, payload) {
-      const {
-        data
-      } = await this.$axios.post("subscription", payload)
-      commit("addSubscription", data)
-
+    async addSubscription({ commit }, payload) {
+      const { data } = await this.$axios.post('subscription', payload)
+      commit('addSubscription', data)
     },
-    async loadSuppliers({
-      commit
-    }) {
-      const {
-        data
-      } = await this.$axios.get("Supplier")
-      commit("setSuppliers", data)
+    async loadSuppliers({ commit }) {
+      const { data } = await this.$axios.get('Supplier')
+      commit('setSuppliers', data)
     }
   },
   getters: {
@@ -101,4 +83,4 @@ export default {
       return state.suppliers
     }
   }
-};
+}

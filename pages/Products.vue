@@ -27,6 +27,14 @@
                       <v-form>
                         <v-text-field v-model="title" label="Titel"></v-text-field>
                         <v-text-field v-model="cost" type="number" label="Kostnad"></v-text-field>
+                        <v-select
+                          v-model="productCategory"
+                          :items="productCategories"
+                          item-text="name"
+                          label="Kategori"
+                          return-object
+                          clearable
+                        ></v-select>
                         <v-textarea v-model="description" label="Beskrivning"></v-textarea>
                       </v-form>
                     </v-card-text>
@@ -50,6 +58,7 @@
             >
               <template slot="items" slot-scope="props">
                 <tr>
+                  <td>{{ props.item.categoryName}}</td>
                   <td>{{ props.item.title}}</td>
                   <td>{{ props.item.description}}</td>
                   <td>{{ props.item.cost}} kr</td>
@@ -90,6 +99,7 @@
 <script>
 export default {
   async fetch({ store }) {
+    await store.dispatch('loadProductCategories')
     await store.dispatch('loadProducts')
   },
   data() {
@@ -103,7 +113,9 @@ export default {
       title: '',
       cost: '',
       description: '',
+      productCategory: '',
       headers: [
+        { text: 'Kategori', value: 'categoryName' },
         { text: 'Titel', value: 'title' },
         { text: 'Beskrivning', value: 'description' },
         { text: 'Kostnad', value: 'cost' }
@@ -124,7 +136,11 @@ export default {
       this.id = val.id
       ;(this.title = val.title),
         (this.description = val.description),
-        (this.cost = val.cost)
+        (this.cost = val.cost),
+        (this.productCategory = this.productCategories.find(cat => {
+          return cat.id == val.categoryId
+        }))
+      console.log('category' + JSON.stringify(val))
       this.dialog = true
     },
     close() {
@@ -138,13 +154,16 @@ export default {
           id: this.id,
           title: this.title,
           description: this.description,
-          cost: this.cost
+          cost: this.cost,
+          category: this.productCategory.id
         })
       } else {
+        console.log('cat to save' + this.productCategory.id)
         this.$store.dispatch('addProduct', {
           title: this.title,
           description: this.description,
-          cost: this.cost
+          cost: this.cost,
+          categoryId: this.productCategory.id
         })
       }
 
@@ -152,12 +171,18 @@ export default {
     },
     addProduct() {
       this.editing = false
-      ;(this.title = ''), (this.description = ''), (this.cost = '')
+      ;(this.title = ''),
+        (this.description = ''),
+        (this.cost = ''),
+        (this.productCategory = '')
     }
   },
   computed: {
     products() {
       return this.$store.getters.products
+    },
+    productCategories() {
+      return this.$store.getters.productCategories
     },
     formTitle() {
       if (this.editing) {

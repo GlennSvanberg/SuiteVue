@@ -17,9 +17,7 @@ export default {
       commit
 
     }) {
-      const {
-        data
-      } = await this.$axios.get("user/all")
+      const { data} = await this.$axios.get("user/all")
       commit("setUsers", data)
     },
 

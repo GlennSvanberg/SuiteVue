@@ -1,9 +1,10 @@
-import Vuex from "vuex";
-import axios from "axios";
+import Vuex from 'vuex'
+import axios from 'axios'
 
 export default {
   state: () => ({
-    products: []
+    products: [],
+    productCategories: []
   }),
   mutations: {
     setProducts(state, payload) {
@@ -13,7 +14,7 @@ export default {
       state.products.push(payload)
     },
     editProduct(state, payload) {
-      var product = state.products.find(x => x.id == payload.id);
+      var product = state.products.find(x => x.id == payload.id)
       if (product) {
         Object.assign(product, payload)
       } else {
@@ -27,49 +28,39 @@ export default {
         }
       }
     },
-
+    setProductCategories(state, payload) {
+      state.productCategories = payload
+    }
   },
   actions: {
-    async loadProducts({
-      commit
-
-    }) {
-      const {
-        data
-      } = await this.$axios.get("product")
-      commit("setProducts", data)
+    async loadProducts({ commit }) {
+      const { data } = await this.$axios.get('product')
+      commit('setProducts', data)
     },
-    async addProduct({
-      commit
-    }, payload) {
-      const {
-        data
-      } = await this.$axios.post("product", payload)
-      commit("addProduct", data)
-
+    async addProduct({ commit }, payload) {
+      console.log('payload: ' + JSON.stringify(payload))
+      const { data } = await this.$axios.post('product', payload)
+      commit('addProduct', data)
     },
-    async editProduct({
-      commit
-    }, payload) {
-      const {
-        data
-      } = await this.$axios.post("product/edit", payload)
-      commit("editProduct", data)
-
+    async editProduct({ commit }, payload) {
+      const { data } = await this.$axios.post('product/edit', payload)
+      commit('editProduct', data)
     },
-    async deleteProduct({
-      commit
-    }, payload) {
-      const {
-        data
-      } = await this.$axios.delete("product/" + payload)
-      commit("deleteProduct", data)
+    async deleteProduct({ commit }, payload) {
+      const { data } = await this.$axios.delete('product/' + payload)
+      commit('deleteProduct', data)
     },
-
+    async loadProductCategories({ commit }) {
+      const { data } = await this.$axios.get('productcategory')
+      commit('setProductCategories', data)
+    }
   },
   getters: {
     products(state) {
       return state.products
+    },
+    productCategories(state) {
+      return state.productCategories
     }
   }
-};
+}

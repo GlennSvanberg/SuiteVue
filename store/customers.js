@@ -1,5 +1,5 @@
-import Vuex from "vuex";
-import axios from "axios";
+import Vuex from 'vuex'
+import axios from 'axios'
 
 export default {
   state: () => ({
@@ -18,44 +18,34 @@ export default {
     }
   },
   actions: {
-    getCustomer({
-      commit
-    }, payload) {
-      console.log("customer" + payload);
+    getCustomer({ commit }, payload) {
+      console.log('customer' + payload)
     },
-    loadOpenCustomer({
-      commit
-    }, payload) {
-      console.log("here" + payload)
-      this.$axios.get("customer/" + payload).then(res => {
-        commit("setLoadedCustomer", res.data)
+    loadOpenCustomer({ commit }, payload) {
+      console.log('here' + payload)
+      this.$axios.get('customer/' + payload).then(res => {
+        commit('setLoadedCustomer', res.data)
       })
-
     },
-    async loadCustomers({
-      commit
-
-    }) {
-      const {
-        data
-      } = await this.$axios.get("customer")
-      commit("setCustomers", data)
+    async loadCustomers({ commit }) {
+      const { data } = await this.$axios.get('customer')
+      commit('setCustomers', data)
     },
-    createCustomer({
-      commit
-    }, payload) {
-      this.$axios.post("customer", payload).then(res => {
-        commit("setLoadedCustomer", res.data)
-        var customer = {
-          id: res.data.id,
-          name: res.data.firstName + " " + res.data.lastName,
-          personalNumber: res.data.personalNumber
-        }
-        commit("addCustomer", customer)
-
-      }).catch(error => {
-        console.log("error" + error)
-      })
+    createCustomer({ commit }, payload) {
+      this.$axios
+        .post('customer', payload)
+        .then(res => {
+          commit('setLoadedCustomer', res.data)
+          var customer = {
+            id: res.data.id,
+            name: res.data.firstName + ' ' + res.data.lastName,
+            personalNumber: res.data.personalNumber
+          }
+          commit('addCustomer', customer)
+        })
+        .catch(error => {
+          console.log('error' + error)
+        })
     }
   },
   getters: {
@@ -66,4 +56,4 @@ export default {
       return state.customers
     }
   }
-};
+}
