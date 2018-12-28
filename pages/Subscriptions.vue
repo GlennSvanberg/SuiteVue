@@ -132,7 +132,14 @@ export default {
     },
     saveSubscription() {
       if (this.editing) {
-        // do something maybe save the changes???
+        this.$store.dispatch('editSubscription', {
+          supplierId: this.supplier.id,
+          id: this.id,
+          title: this.title,
+          pricePerMonth: this.pricePerMonth,
+          revenue: this.revenue,
+          periodInMonths: this.periodInMonths
+        })
       } else {
         this.$store
           .dispatch('addSubscription', {

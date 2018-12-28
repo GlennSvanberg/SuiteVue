@@ -67,6 +67,24 @@
         </v-card>
       </v-flex>
     </v-layout>
+
+    <v-dialog v-model="confirmDeleteDialog" max-width="400px" persistent>
+      <v-card>
+        <v-toolbar dark color="primary">
+          <span class="headline">Bekräfta</span>
+        </v-toolbar>
+        <v-card-content>
+          <div class="my-4 mx-3">
+            <span class="headline">Vill du verkligen ta bort {{productToDelete.title}}?</span>
+          </div>
+        </v-card-content>
+        <v-card-actions class="mt-5">
+          <v-spacer></v-spacer>
+          <v-btn class="green--text darken-1" flat @click="close">Nej</v-btn>
+          <v-btn class="red--text darken-1" flat @click="confirmDeleteProduct">Ja</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </v-container>
 </template>
 <script>
@@ -79,6 +97,8 @@ export default {
       search: '',
       editing: false,
       dialog: false,
+      confirmDeleteDialog: false,
+      productToDelete: {},
       id: '',
       title: '',
       cost: '',
@@ -91,12 +111,15 @@ export default {
     }
   },
   methods: {
+    confirmDeleteProduct() {
+      this.$store.dispatch('deleteProduct', this.productToDelete.id)
+      this.confirmDeleteDialog = false
+    },
     deleteProduct(val) {
-      console.log('delete' + val)
-      this.$store.dispatch('deleteProduct', val.id)
+      this.productToDelete = val
+      this.confirmDeleteDialog = true
     },
     editProduct(val) {
-      console.log('edit' + val)
       this.editing = true
       this.id = val.id
       ;(this.title = val.title),
@@ -105,11 +128,11 @@ export default {
       this.dialog = true
     },
     close() {
-      console.log('close')
       this.dialog = false
+      this.confirmDeleteDialog = false
+      this.editing = false
     },
     saveProduct() {
-      console.log('save')
       if (this.editing) {
         this.$store.dispatch('editProduct', {
           id: this.id,

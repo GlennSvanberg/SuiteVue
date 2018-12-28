@@ -21,6 +21,27 @@ export default {
     setSuppliers(state, payload) {
       state.suppliers = payload
     },
+    editSubscription(state, payload) {
+      // Just made this and it is not working
+      var editedSubscription = {
+        id: payload.id,
+        supplierName: supplier.name,
+        supplierId: supplier.id,
+        title: payload.title,
+        pricePerMonth: payload.pricePerMonth,
+        revenue: payload.revenue,
+        subscriptionNumber: payload.subscriptionNumber,
+        periodInMonths: payload.periodInMonths
+      }
+      var supplier = state.suppliers.find(data => {
+        return data.id == payload.supplier.id
+      })
+      var subscription = supplier.subscriptions.find(x => x.id == payload.id);
+      if (subscription) {
+        Object.assign(subscription, editedSubscription)
+      }
+    },
+
     addSubscription(state, payload) {
       var supplier = state.suppliers.find(data => {
         return data.id == payload.supplier.id
@@ -33,12 +54,21 @@ export default {
         pricePerMonth: payload.pricePerMonth,
         revenue: payload.revenue,
         subscriptionNumber: payload.subscriptionNumber,
-        perionInMonths: payload.perionInMonths
+        periodInMonths: payload.periodInMonths
       }
       supplier.subscriptions.push(subscription)
     }
   },
   actions: {
+    async editSubscription({
+      commit
+    }, payload) {
+      const {
+        data
+      } = await this.$axios.post("subscription/edit" + payload)
+      console.log("returned from backend " + JSON.stringify(data))
+      commit("editSubscription", data)
+    },
     async deleteSubscription({
       commit
     }, payload) {

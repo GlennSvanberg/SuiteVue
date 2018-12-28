@@ -18,7 +18,7 @@
         >
           <template slot="items" slot-scope="props">
             <tr
-              :class="{primary: props.selected}"
+              :class="{primary: props.selected , marked: props.selected}"
               :active="props.selected"
               @click="props.selected = !props.selected, openCustomer(props.item.id)"
             >
@@ -35,7 +35,6 @@
   </v-container>
 </template>
 <script>
-import CustomersList from '~/components/customerslist'
 import CustomerDetails from '~/components/customerdetails'
 import CreateCustomer from '~/components/createcustomer'
 
@@ -80,4 +79,7 @@ export default {
 </script>
 
 <style>
+.marked {
+  color: white;
+}
 </style>

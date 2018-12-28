@@ -19,7 +19,6 @@ export default {
       } else {
         state.products.push(payload)
       }
-
     },
     deleteProduct(state, payload) {
       for (var i = 0; i < state.products.length; i++) {
