@@ -25,8 +25,9 @@
                   label="Abonnemangsnummer"
                   type="number"
                   v-model="subscriptionNumber"
-                  clearable
                 ></v-text-field>
+
+                <search-product @productChanged="productChanged"></search-product>
               </v-flex>
               <v-flex xs12 sm4>
                 <v-card class="ml-4">
@@ -35,17 +36,21 @@
                   </v-card-title>
                   <v-divider></v-divider>
                   <v-list dense>
-                    <v-list-tile>
+                    <v-list-tile :class="{error: tb < 0}">
                       <v-list-tile-content>TB:</v-list-tile-content>
-                      <v-list-tile-action class="align-end text-xs-right">{{tb}}</v-list-tile-action>
+                      <v-list-tile-action class="align-end text-xs-right">{{tb}} kr</v-list-tile-action>
+                    </v-list-tile>
+                    <v-list-tile>
+                      <v-list-tile-content>Kostnad:</v-list-tile-content>
+                      <v-list-tile-action class="align-end text-right">{{cost}} kr</v-list-tile-action>
                     </v-list-tile>
                     <v-list-tile>
                       <v-list-tile-content>Ersättning:</v-list-tile-content>
-                      <v-list-tile-action class="align-end text-right">{{revenue}}</v-list-tile-action>
+                      <v-list-tile-action class="align-end text-right">{{revenue}} kr</v-list-tile-action>
                     </v-list-tile>
                     <v-list-tile>
-                      <v-list-tile-content>Total Månadskostnad:</v-list-tile-content>
-                      <v-list-tile-action class="align-end text-right">{{monthlyCost}}</v-list-tile-action>
+                      <v-list-tile-content>Månadskostnad:</v-list-tile-content>
+                      <v-list-tile-action class="align-end text-right">{{monthlyCost}} kr</v-list-tile-action>
                     </v-list-tile>
                   </v-list>
                 </v-card>
@@ -71,17 +76,20 @@ import SearchUser from '~/components/searchUser'
 import SearchCustomer from '~/components/searchcustomer'
 import SearchStore from '~/components/searchstore'
 import SearchSubscription from '~/components/searchsubscription'
+import SearchProduct from '~/components/searchproduct'
 
 export default {
   created() {
     this.$store.dispatch('loadUsers')
     this.$store.dispatch('loadStores')
+    this.$store.dispatch('loadProducts')
   },
   components: {
     SearchCustomer: SearchCustomer,
     SearchUser: SearchUser,
     SearchStore: SearchStore,
-    SearchSubscriuption: SearchSubscription
+    SearchSubscriuption: SearchSubscription,
+    SearchProduct: SearchProduct
   },
   data() {
     return {
@@ -97,11 +105,17 @@ export default {
       subscriptionNumber: '',
       revenue: 0,
       tb: 0,
-      monthlyCost: 0
+      monthlyCost: 0,
+      cost: 0
     }
   },
   computed: {},
   methods: {
+    productChanged(val) {
+      this.products = val.products
+      this.tb = this.revenue - val.cost
+      this.cost = val.cost
+    },
     customerChange(val) {
       this.customerId = val
     },
@@ -109,18 +123,15 @@ export default {
       this.sellerId = val
     },
     storeChange(val) {
-      console.log('store' + val)
       this.storeId = val
     },
     supplierChange(val) {
-      console.log('supplier' + val)
       this.supplierId = val
     },
     subscriptionChange(val) {
-      console.log('subscription' + JSON.stringify(val))
       this.subscriptionId = val.id
       this.revenue = val.revenue
-      this.tb = this.revenue
+      this.tb = this.revenue - this.cost
       this.monthlyCost = val.pricePerMonth
     },
     clear() {
