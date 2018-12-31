@@ -32,6 +32,9 @@ export default {
       state.suppliers = payload
     },
     editSubscription(state, payload) {
+      var supplier = state.suppliers.find(data => {
+        return data.id == payload.supplier.id
+      })
       var editedSubscription = {
         id: payload.id,
         supplierName: supplier.name,
@@ -42,15 +45,15 @@ export default {
         subscriptionNumber: payload.subscriptionNumber,
         periodInMonths: payload.periodInMonths
       }
-      var supplier = state.suppliers.find(data => {
-        return data.id == payload.supplier.id
-      })
       var subscription = supplier.subscriptions.find(x => x.id == payload.id)
       if (subscription) {
         Object.assign(subscription, editedSubscription)
       }
     },
     editAddon(state, payload) {
+      var supplier = state.suppliers.find(data => {
+        return data.id == payload.supplier.id
+      })
       var editedAddon = {
         id: payload.id,
         supplierName: supplier.name,
@@ -61,9 +64,7 @@ export default {
         subscriptionNumber: payload.subscriptionNumber,
         periodInMonths: payload.periodInMonths
       }
-      var supplier = state.suppliers.find(data => {
-        return data.id == payload.supplier.id
-      })
+
       var addon = supplier.subscriptionAddons.find(x => x.id == payload.id)
       if (addon) {
         Object.assign(addon, editedAddon)
