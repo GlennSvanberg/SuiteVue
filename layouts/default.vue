@@ -32,8 +32,8 @@
           </v-btn>
         </v-toolbar-title>
         <v-list>
-          <v-list-tile @click="subscription">
-            <v-list-tile-title>Abonnemang</v-list-tile-title>
+          <v-list-tile @click="suppliers">
+            <v-list-tile-title>Leverantörer</v-list-tile-title>
           </v-list-tile>
           <v-list-tile @click="products">
             <v-list-tile-title>Produkter</v-list-tile-title>
@@ -68,8 +68,8 @@ export default {
     }
   },
   methods: {
-    subscription() {
-      this.$router.push('/subscriptions')
+    suppliers() {
+      this.$router.push('/suppliers')
     },
     products() {
       this.$router.push('/products')
