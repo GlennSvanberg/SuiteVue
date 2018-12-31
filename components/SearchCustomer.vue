@@ -6,7 +6,7 @@
           class="ml-3"
           v-model="customer"
           :items="customers"
-          label="Kund: yyyymmddxxxx"
+          label="Kund"
           prepend-icon="face"
           item-value="customer"
           item-text="personalNumber"

@@ -1,5 +1,5 @@
 <template>
-  <v-app light>
+  <v-app dark>
     <nuxt/>
     <v-footer app>
       <span>Glenn Svanberg &copy; 2018</span>

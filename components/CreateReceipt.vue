@@ -30,7 +30,7 @@
                 <search-product @productChanged="productChanged"></search-product>
               </v-flex>
               <v-flex xs12 sm4>
-                <v-card class="ml-4">
+                <v-card class="ml-4" light>
                   <v-card-title class="primary white--text py-3">
                     <h4>Totalt</h4>
                   </v-card-title>
@@ -62,8 +62,12 @@
       <v-flex xs12>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn class="red--text darken-1" flat @click="createReceiptDialog = false">Avbryt</v-btn>
-          <v-btn class="green--text darken-1" flat @click="createReceipt" :disabled="!valid">Spara</v-btn>
+          <v-btn class="error" @click="createReceiptDialog = false">
+            <v-icon left>cancel</v-icon>Avbryt
+          </v-btn>
+          <v-btn class="success" @click="createReceipt" :disabled="!valid">
+            <v-icon left>save</v-icon>Spara
+          </v-btn>
         </v-card-actions>
       </v-flex>
     </v-card>

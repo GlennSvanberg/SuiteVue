@@ -4,8 +4,8 @@
       <v-flex xs12>
         <v-card>
           <v-layout row class="mx-3">
-            <v-toolbar flat tabs>
-              <v-tabs v-model="active" color="primary" dark slider-color="white" grow>
+            <v-toolbar flat tabs color="accent">
+              <v-tabs v-model="active" color="primary" slider-color="white" grow>
                 <v-tab
                   @click="changeTab(supplier)"
                   v-for="supplier in suppliers"
@@ -47,8 +47,12 @@
 
                   <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn class="red--text darken-1" flat @click="close">Avbryt</v-btn>
-                    <v-btn class="green--text darken-1" flat @click="saveSubscription">Spara</v-btn>
+                    <v-btn class="error" @click="close">
+                      <v-icon left>cancel</v-icon>Avbryt
+                    </v-btn>
+                    <v-btn class="success" @click="saveSubscription">
+                      <v-icon left>save</v-icon>Spara
+                    </v-btn>
                   </v-card-actions>
                 </v-card>
               </v-dialog>
@@ -87,6 +91,28 @@
         </v-card>
       </v-flex>
     </v-layout>
+
+    <v-dialog v-model="confirmDeleteDialog" max-width="400px" persistent>
+      <v-card>
+        <v-toolbar dark color="primary">
+          <span class="headline">Bekräfta</span>
+        </v-toolbar>
+        <v-card-text>
+          <div class="my-4 mx-3">
+            <span class="headline">Vill du verkligen ta bort {{subscriptionToDelete.title}}?</span>
+          </div>
+        </v-card-text>
+        <v-card-actions class="mt-5">
+          <v-spacer></v-spacer>
+          <v-btn class="error" @click="close">
+            <v-icon left>cancel</v-icon>Avbryt
+          </v-btn>
+          <v-btn class="success" @click="confirmDeleteSubscription">
+            <v-icon left>delete</v-icon>Ta Bort
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </v-container>
 </template>
 <script>
@@ -112,6 +138,8 @@ export default {
       active: null,
       editing: false,
       key: null,
+      subscriptionToDelete: {},
+      confirmDeleteDialog: false,
       headers: [
         { text: 'Leverantör', value: 'supplierName' },
         { text: 'Titel', value: 'title' },
@@ -160,6 +188,7 @@ export default {
     },
     close() {
       this.dialog = false
+      this.confirmDeleteDialog = false
     },
     editItem(val) {
       this.editing = true
@@ -173,8 +202,12 @@ export default {
       console.log('item to edit' + JSON.stringify(val))
     },
     deleteItem(val) {
-      console.log('item to delete' + JSON.stringify(val))
-      this.$store.dispatch('deleteSubscription', val.id)
+      this.subscriptionToDelete = val
+      this.confirmDeleteDialog = true
+    },
+    confirmDeleteSubscription() {
+      this.$store.dispatch('deleteSubscription', this.subscriptionToDelete.id)
+      this.confirmDeleteDialog = false
     },
     changeTab(supplier) {
       console.log('test' + JSON.stringify(supplier))

@@ -42,8 +42,12 @@
 
                   <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn class="red--text darken-1" flat @click="close">Avbryt</v-btn>
-                    <v-btn class="green--text darken-1" flat @click="saveProduct">Spara</v-btn>
+                    <v-btn class="error" flat @click="close">
+                      <v-icon left>cancel</v-icon>Avbryt
+                    </v-btn>
+                    <v-btn class="success" flat @click="saveProduct">
+                      <v-icon left>save</v-icon>Spara
+                    </v-btn>
                   </v-card-actions>
                 </v-card>
               </v-dialog>
@@ -89,8 +93,12 @@
         </v-card-content>
         <v-card-actions class="mt-5">
           <v-spacer></v-spacer>
-          <v-btn class="green--text darken-1" flat @click="close">Nej</v-btn>
-          <v-btn class="red--text darken-1" flat @click="confirmDeleteProduct">Ja</v-btn>
+          <v-btn class="error" @click="close">
+            <v-icon left>cancel</v-icon>Avbryt
+          </v-btn>
+          <v-btn class="success" @click="confirmDeleteProduct">
+            <v-icon left>delete</v-icon>Ta Bort
+          </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>

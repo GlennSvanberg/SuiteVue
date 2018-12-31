@@ -1,5 +1,5 @@
 <template>
-  <v-dialog width="450px" persistent v-model="createCustomerDialog">
+  <v-dialog width="800px" persistent v-model="createCustomerDialog">
     <v-btn class="primary" slot="activator">
       <v-icon>add</v-icon>Ny Kund
     </v-btn>
@@ -8,7 +8,7 @@
         <v-toolbar-title>Ny Kund</v-toolbar-title>
         <v-spacer></v-spacer>
       </v-toolbar>
-      <v-container>
+      <v-flex xs6 offset-xs3>
         <v-card-text>
           <v-form v-model="valid" ref="form" lazy-validation>
             <v-text-field
@@ -78,14 +78,17 @@
             ></v-text-field>
           </v-form>
         </v-card-text>
-      </v-container>
+      </v-flex>
 
-      <v-flex xs12>
+      <v-flex xs12 class="mt-5">
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn class="red--text darken-1" flat @click="createCustomerDialog = false">Avbryt</v-btn>
-
-          <v-btn class="green--text darken-1" flat @click="createCustomer" :disabled="!valid">Spara</v-btn>
+          <v-btn class="error" @click="createCustomerDialog = false">
+            <v-icon left>cancel</v-icon>Avbryt
+          </v-btn>
+          <v-btn class="success" @click="createCustomer" :disabled="!valid">
+            <v-icon left>save</v-icon>Spara
+          </v-btn>
         </v-card-actions>
       </v-flex>
     </v-card>
