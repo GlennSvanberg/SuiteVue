@@ -3,7 +3,7 @@
     <v-layout row wrap>
       <v-flex xs12>
         <v-card>
-          <v-layout row class="mx-3">
+          <v-layout row class>
             <v-toolbar flat tabs color="accent">
               <v-tabs v-model="active" color="primary" slider-color="white" grow>
                 <v-tab
@@ -15,7 +15,7 @@
               </v-tabs>
             </v-toolbar>
           </v-layout>
-          <v-card flat>
+          <v-card flat color="#303030">
             <subscriptions :supplier="supplier" v-if="supplier.subscriptionSupplier"></subscriptions>
             <supplier-calculations v-if="!supplier.subscriptionSupplier"></supplier-calculations>
           </v-card>
