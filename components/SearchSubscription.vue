@@ -20,6 +20,16 @@
           return-object
           clearable
         ></v-select>
+        <v-select
+          v-if="supplier.subscriptionAddons"
+          class="ml-5"
+          v-model="addon"
+          :items="supplier.subscriptionAddons"
+          item-text="title"
+          label="Tillägg"
+          return-object
+          clearable
+        ></v-select>
       </v-flex>
     </v-layout>
   </v-card>
@@ -48,6 +58,22 @@ export default {
         })
       } else {
         this.$emit('subscriptionChange', {
+          subscriptionId: null,
+          addonId: null,
+          revenue: 0,
+          pricePerMonth: 0
+        })
+      }
+    },
+    addon(val) {
+      if (val) {
+        this.$emit('addonChange', {
+          id: val.id,
+          revenue: val.revenue,
+          pricePerMonth: val.pricePerMonth
+        })
+      } else {
+        this.$emit('addonChange', {
           id: null,
           revenue: 0,
           pricePerMonth: 0
@@ -57,8 +83,9 @@ export default {
   },
   data() {
     return {
-      supplier: { subscriptions: [] },
+      supplier: { subscriptions: [], subscriptionAddons: [] },
       subscription: null,
+      addon: null,
       search: null
     }
   }

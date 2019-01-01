@@ -10,16 +10,17 @@
       </v-toolbar>
       <v-container fluid>
         <v-card-text>
-          <v-form v-model="valid" ref="form" lazy-validation class="my-3">
-            <search-user @sellerChange="sellerChange" class="my-3"></search-user>
+          <v-form v-model="valid" ref="form" lazy-validation>
+            <search-user @sellerChange="sellerChange" class="mb-3"></search-user>
             <search-store @storeChange="storeChange" class="my-3"></search-store>
             <search-customer @customerChange="customerChange" class="my-3"></search-customer>
-            <v-layout row wrap class="mt-4">
+            <v-layout row wrap>
               <v-flex xs12 sm8>
-                <search-subscriuption
+                <search-subscription
                   @supplierChange="supplierChange"
                   @subscriptionChange="subscriptionChange"
-                ></search-subscriuption>
+                  @addonChange="addonChange"
+                ></search-subscription>
                 <v-text-field
                   class="ml-5"
                   label="Abonnemangsnummer"
@@ -92,7 +93,7 @@ export default {
     SearchCustomer: SearchCustomer,
     SearchUser: SearchUser,
     SearchStore: SearchStore,
-    SearchSubscriuption: SearchSubscription,
+    SearchSubscription: SearchSubscription,
     SearchProduct: SearchProduct
   },
   data() {
@@ -104,22 +105,24 @@ export default {
       storeId: null,
       products: [],
       supplierId: '',
-      subscrptionId: '',
-      subscriptionAddon: '',
+      subscriptionId: '',
+      addonId: '',
       subscriptionNumber: '',
-      revenue: 0,
-      tb: 0,
+      subscriptionRevenue: 0,
+      addonRevenue: 0,
       monthlyCost: 0,
       cost: 0
     }
   },
-  computed: {},
-  methods: {
-    productChanged(val) {
-      this.products = val.products
-      this.tb = this.revenue - val.cost
-      this.cost = val.cost
+  computed: {
+    revenue() {
+      return this.subscriptionRevenue + this.addonRevenue
     },
+    tb() {
+      return this.subscriptionRevenue + this.addonRevenue - this.cost
+    }
+  },
+  methods: {
     customerChange(val) {
       this.customerId = val
     },
@@ -134,9 +137,17 @@ export default {
     },
     subscriptionChange(val) {
       this.subscriptionId = val.id
-      this.revenue = val.revenue
-      this.tb = this.revenue - this.cost
+      this.subscriptionRevenue = val.revenue
       this.monthlyCost = val.pricePerMonth
+    },
+    addonChange(val) {
+      console.log('addonChange' + JSON.stringify(val))
+      this.addonRevenue = val.revenue
+      this.addonId = val.id
+    },
+    productChanged(val) {
+      this.products = val.products
+      this.cost = val.cost
     },
     clear() {
       this.$refs.form.reset()
@@ -144,11 +155,21 @@ export default {
     createReceipt() {
       if (this.$refs.form.validate()) {
         console.log('creating')
+        var receipt = {
+          sellerId: this.sellerId,
+          customerId: this.customerId,
+          storeId: this.storeId,
+          supplierId: this.supplierId,
+          subscriptionId: this.subscriptionId,
+          subscriptionAddonId: this.addonId,
+          subscriptionNumber: this.subscriptionNumber,
+          productIds: this.products
+        }
 
-        //this.$store.dispatch('createReceipt', {})
+        this.$store.dispatch('addReceipt', receipt)
 
-        //this.$refs.form.reset()
-        this.createCustomerDialog = false
+        //this.reset()
+        this.createReceiptDialog = false
       }
     }
   }

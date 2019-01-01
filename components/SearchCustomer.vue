@@ -1,7 +1,7 @@
 <template>
   <v-card flat>
     <v-layout row>
-      <v-flex xs8>
+      <v-flex sm8>
         <v-autocomplete
           class="ml-3"
           v-model="customer"
@@ -33,9 +33,9 @@
           </template>
         </v-autocomplete>
       </v-flex>
-      <v-flex xs4>
+      <v-flex xs4 v-if="!customer">
         <no-ssr>
-          <create-customer class="ml-3" v-if="!customer" @newCustomer="newCustomer"></create-customer>
+          <create-customer class="ml-3" @newCustomer="newCustomer"></create-customer>
         </no-ssr>
       </v-flex>
     </v-layout>

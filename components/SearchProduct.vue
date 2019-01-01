@@ -1,5 +1,5 @@
 <template>
-  <v-card flat>
+  <v-card flat class="mb-0">
     <v-layout row>
       <v-flex xs12>
         <v-autocomplete

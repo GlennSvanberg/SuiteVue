@@ -29,7 +29,7 @@
         </v-data-table>
       </v-flex>
       <v-flex sm12 md6>
-        <customer-details></customer-details>
+        <customer-details class="mx-3"></customer-details>
       </v-flex>
     </v-layout>
   </v-container>
@@ -76,6 +76,7 @@ export default {
     CreateCustomer: CreateCustomer
   }
 }
+
 </script>
 
 <style>

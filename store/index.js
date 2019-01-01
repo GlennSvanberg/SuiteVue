@@ -6,6 +6,7 @@ import users from './users'
 import stores from './stores'
 import subscriptions from './subscriptions'
 import products from './products'
+import receipts from './receipts'
 
 Vue.use(Vuex)
 
@@ -17,7 +18,8 @@ const store = () => {
       users: users,
       stores: stores,
       subscriptions: subscriptions,
-      products: products
+      products: products,
+      receipts: receipts
     }
   })
 }

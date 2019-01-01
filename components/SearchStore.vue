@@ -1,7 +1,7 @@
 <template>
   <v-card flat>
     <v-layout row>
-      <v-flex xs8>
+      <v-flex xs12 sm8>
         <v-select
           class="ml-3"
           v-model="store"
